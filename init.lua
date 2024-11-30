@@ -208,6 +208,9 @@ vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
 
+vim.keymap.set('n', ']g', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, { desc = 'Previews diagnostic' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
