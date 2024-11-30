@@ -487,6 +487,7 @@ require('lazy').setup({
     },
     opts = {
       setup = {
+        -- mrcjkb/rustaceanvim suggested adding it when it detected rust-analyzer installed with Mason
         rust_analyzer = function()
           return true
         end,
@@ -611,7 +612,7 @@ require('lazy').setup({
             end, '[T]oggle Inlay [H]ints')
           end
 
-          map('gi', vim.diagnostic.open_float, '[G]get [i]issue')
+          map('gi', vim.diagnostic.open_float, '[G]et [i]issue')
         end,
       })
 
