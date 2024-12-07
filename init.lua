@@ -208,9 +208,6 @@ vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
 
-vim.keymap.set('n', ']g', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
-vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, { desc = 'Previews diagnostic' })
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -614,8 +611,6 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
-
-          map('gi', vim.diagnostic.open_float, '[G]et [i]issue')
         end,
       })
 
