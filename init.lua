@@ -208,6 +208,8 @@ vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
 
+vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
