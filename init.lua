@@ -959,7 +959,11 @@ require('lazy').setup({
     lazy = false, -- This plugin is already lazy
   },
   {
-    'pest-parser/pest.vim'
+    'pest-parser/pest.vim',
+  },
+  {
+    'sphamba/smear-cursor.nvim',
+    opts = {},
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
