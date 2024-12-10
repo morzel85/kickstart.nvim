@@ -208,7 +208,13 @@ vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
 
-vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
+vim.keymap.set('n', '<leader>mc', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
+vim.keymap.set('n', '<leader>md', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
+vim.keymap.set('n', '<leader>mf', ':let @+ = expand("%:t")<CR>', { desc = 'Copy file name to + (clipboard)' })
+vim.keymap.set('n', '<leader>mp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy path to + (clipboard)' })
+vim.keymap.set('n', '<leader>mr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
+vim.keymap.set('n', '<leader>ms', ':w | so %<CR>', { desc = 'Save file and source it' })
+vim.keymap.set('n', '<leader>mt', '"=strftime("%FT%T%z")<CR>p', { desc = 'Paste timestamp' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
