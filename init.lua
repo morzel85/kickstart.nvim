@@ -744,6 +744,10 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         rust = { 'rustfmt' },
+        javascript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescript = { 'prettier' },
+        typescriptreact = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
