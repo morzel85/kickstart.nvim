@@ -202,10 +202,10 @@ vim.keymap.set('n', '<C-k>', ':res +1<CR>', { desc = 'Increase height' })
 vim.keymap.set('n', '<C-l>', ':vert res +1<CR>', { desc = 'Increase width' })
 
 vim.keymap.set('n', 'gD', ':FzfLua lsp_declarations<CR>', { desc = '[g]et [D]eclarations' })
-vim.keymap.set('n', 'ga', ':FzfLua lsp_code_actions<CR>', { desc = '[g]et [c]ode actions' })
 vim.keymap.set('n', 'gd', ':FzfLua lsp_definitions<CR>', { desc = '[g]et [d]efinitions' })
-vim.keymap.set('n', 'gr', ':FzfLua lsp_references<CR>', { desc = '[g]et [r]eferences' })
 vim.keymap.set('n', 'gt', ':FzfLua lsp_typedefs<CR>', { desc = '[g]et [t]ype definitions' })
+
+vim.keymap.set('n', '<leader>a', ':FzfLua lsp_code_actions<CR>', { desc = '[g]et [c]ode actions' })
 
 vim.keymap.set('n', '<leader>dd', ':FzfLua diagnostics_document<CR>', { desc = '[d]ebug [d]ocument diagnostics' })
 vim.keymap.set('n', '<leader>dw', ':FzfLua diagnostics_workspace<CR>', { desc = '[d]ebug [w]orkspace diagnostics' })
@@ -229,10 +229,12 @@ vim.keymap.set('n', '<leader>sf', ':FzfLua files<CR>', { desc = '[s]earch [f]ile
 vim.keymap.set('n', '<leader>sg', ':FzfLua live_grep<CR>', { desc = '[s]earch live [g]rep' })
 vim.keymap.set('n', '<leader>sk', ':FzfLua keymaps<CR>', { desc = '[s]earch [k]eymaps' })
 vim.keymap.set('n', '<leader>so', ':FzfLua oldfiles<CR>', { desc = '[s]earch [o]ldfiles' })
-vim.keymap.set('n', '<leader>sq', ':FzfLua quickfix<CR>', { desc = '[s]earch [t]reesitter' })
+vim.keymap.set('n', '<leader>sq', ':FzfLua quickfix<CR>', { desc = '[s]earch [q]ickfix' })
+vim.keymap.set('n', '<leader>ss', ':FzfLua resume<CR>', { desc = '[s]earch re[s]ume' })
 vim.keymap.set('n', '<leader>st', ':FzfLua treesitter<CR>', { desc = '[s]earch [t]reesitter' })
 vim.keymap.set('n', '<leader>sv', ':FzfLua grep_visual<CR>', { desc = '[s]earch [v]isual grep' })
 vim.keymap.set('n', '<leader>sw', ':FzfLua grep_cword<CR>', { desc = '[s]earch [w]ord grep' })
+vim.keymap.set('n', '<leader>sr', ':FzfLua lsp_references<CR>', { desc = '[s]earch [r]eferences' })
 
 vim.keymap.set('n', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('n', '<leader>pp', '"0p', { desc = 'Paste from 0' })
@@ -240,6 +242,8 @@ vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
 vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
+
+vim.keymap.set('n', '<leader>;', 'A;<ESC>', { desc = 'Append ;' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
