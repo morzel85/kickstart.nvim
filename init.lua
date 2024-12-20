@@ -205,7 +205,8 @@ vim.keymap.set('n', 'gD', ':FzfLua lsp_declarations<CR>', { desc = '[g]et [D]ecl
 vim.keymap.set('n', 'gd', ':FzfLua lsp_definitions<CR>', { desc = '[g]et [d]efinitions' })
 vim.keymap.set('n', 'gt', ':FzfLua lsp_typedefs<CR>', { desc = '[g]et [t]ype definitions' })
 
-vim.keymap.set('n', '<leader>a', ':FzfLua lsp_code_actions<CR>', { desc = '[g]et [c]ode actions' })
+vim.keymap.set('n', '<leader>aa', ':FzfLua lsp_code_actions<CR>', { desc = 'show [a]ll code [a]ctions' })
+vim.keymap.set('n', '<leader>ar', vim.lsp.buf.rename, { desc = 'code [a]ction: [r]name' })
 
 vim.keymap.set('n', '<leader>dd', ':FzfLua diagnostics_document<CR>', { desc = '[d]ebug [d]ocument diagnostics' })
 vim.keymap.set('n', '<leader>dw', ':FzfLua diagnostics_workspace<CR>', { desc = '[d]ebug [w]orkspace diagnostics' })
