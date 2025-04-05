@@ -128,11 +128,13 @@ vim.keymap.set('n', '<leader>dd', ':FzfLua diagnostics_document<CR>', { desc = '
 vim.keymap.set('n', '<leader>dw', ':FzfLua diagnostics_workspace<CR>', { desc = '[d]ebug [w]orkspace diagnostics' })
 
 vim.keymap.set('n', '<leader>mc', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
-vim.keymap.set('n', '<leader>md', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
-vim.keymap.set('n', '<leader>mf', ':let @+ = expand("%:t")<CR>', { desc = 'Copy file name to + (clipboard)' })
+vim.keymap.set('n', '<leader>mdt', ':TSBufDisable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
+vim.keymap.set('n', '<leader>met', ':TSBufEnable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
 vim.keymap.set('n', '<leader>ml', ':%s/\\r//g<CR>', { desc = 'Clear \\r' })
-vim.keymap.set('n', '<leader>mp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy path to + (clipboard)' })
-vim.keymap.set('n', '<leader>mr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpd', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpf', ':let @+ = expand("%:t")<CR>', { desc = 'Copy file name to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy path to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
 vim.keymap.set('n', '<leader>ms', ':w | so %<CR>', { desc = 'Save file and source it' })
 vim.keymap.set('n', '<leader>mt', '"=strftime("%FT%T%z")<CR>p', { desc = 'Paste timestamp' })
 
