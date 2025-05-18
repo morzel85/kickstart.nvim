@@ -860,3 +860,13 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.wo.foldlevel = 99
   end,
 })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    local yank = vim.fn.getreg '"'
+    local prev8 = vim.fn.getreg '8'
+
+    vim.fn.setreg('9', prev8)
+    vim.fn.setreg('8', yank)
+  end,
+})
