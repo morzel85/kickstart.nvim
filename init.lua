@@ -128,7 +128,7 @@ vim.keymap.set('n', '<leader>dd', ':FzfLua diagnostics_document<CR>', { desc = '
 vim.keymap.set('n', '<leader>dw', ':FzfLua diagnostics_workspace<CR>', { desc = '[d]ebug [w]orkspace diagnostics' })
 
 vim.keymap.set('n', '<leader>mc', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
-vim.keymap.set('n', '<leader>mdt', ':TSBufDisable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
+vim.keymap.set('n', '<leader>mdt', ':TSBufDisable highlight<CR>', { desc = 'Disable syntax highlight by Treesitter' })
 vim.keymap.set('n', '<leader>met', ':TSBufEnable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
 vim.keymap.set('n', '<leader>ml', ':%s/\\r//g<CR>', { desc = 'Clear \\r' })
 vim.keymap.set('n', '<leader>mpd', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
@@ -137,6 +137,15 @@ vim.keymap.set('n', '<leader>mpp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy
 vim.keymap.set('n', '<leader>mpr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
 vim.keymap.set('n', '<leader>ms', ':w | so %<CR>', { desc = 'Save file and source it' })
 vim.keymap.set('n', '<leader>mt', '"=strftime("%FT%T%z")<CR>p', { desc = 'Paste timestamp' })
+vim.keymap.set('n', '<leader>ma', function()
+  -- Without yanked text highlight
+  -- vim.fn.setreg('+', table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n'))
+
+  -- With yanked text highlight
+  local view = vim.fn.winsaveview()
+  vim.cmd 'normal! gg"+yG'
+  vim.fn.winrestview(view)
+end, { desc = 'Copy all to + (clipboard)' })
 
 vim.keymap.set('n', '<leader><leader>', ':FzfLua buffers<CR>', { desc = '[ ] search buffers' })
 vim.keymap.set('n', '<leader>s/', ':FzfLua search_history<CR>', { desc = '[s]earch [/] search history' })
