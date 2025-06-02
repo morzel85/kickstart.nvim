@@ -321,7 +321,8 @@ require('lazy').setup({
       require('fzf-lua').setup {
         'max-perf',
         grep = {
-          rg_opts = "--hidden --glob '!.git/' --color=never --no-heading --column -n --smart-case",
+          hidden = true,
+          -- rg_opts = "--hidden --glob '!.git/' --color=never --no-heading --column -n --smart-case",
         },
       }
     end,
