@@ -318,7 +318,12 @@ require('lazy').setup({
   {
     'ibhagwan/fzf-lua',
     config = function()
-      require('fzf-lua').setup { 'max-perf' }
+      require('fzf-lua').setup {
+        'max-perf',
+        grep = {
+          rg_opts = "--hidden --glob '!.git/' --color=never --no-heading --column -n --smart-case",
+        },
+      }
     end,
   },
   -- LSP Plugins
