@@ -164,6 +164,18 @@ vim.keymap.set('n', '<leader>ss', ':FzfLua resume<CR>', { desc = '[s]earch re[s]
 vim.keymap.set('n', '<leader>st', ':FzfLua treesitter<CR>', { desc = '[s]earch [t]reesitter' })
 vim.keymap.set('n', '<leader>sv', ':FzfLua grep_visual<CR>', { desc = '[s]earch [v]isual grep' })
 vim.keymap.set('n', '<leader>sw', ':FzfLua grep_cword<CR>', { desc = '[s]earch [w]ord grep' })
+vim.keymap.set('n', '<leader>rw', function()
+  local word = vim.fn.expand '<cword>'
+  local cmd = ':%s/' .. word .. '//g'
+  local keys = vim.api.nvim_replace_termcodes(cmd .. '<Left><Left>', true, false, true)
+  vim.api.nvim_feedkeys(keys, 'n', false)
+end, { desc = '[r]eplace text of [w]ord under cursor in current buffer' })
+vim.keymap.set('n', '<leader>rW', function()
+  local word = vim.fn.expand '<cWORD>'
+  local cmd = ':%s/\\V' .. word .. '//g'
+  local keys = vim.api.nvim_replace_termcodes(cmd .. '<Left><Left>', true, false, true)
+  vim.api.nvim_feedkeys(keys, 'n', false)
+end, { desc = '[r]eplace text of [W]ORD under cursor in current buffer' })
 
 vim.keymap.set('n', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('n', '<leader>pp', '"0p', { desc = 'Paste from 0' })
@@ -321,8 +333,8 @@ require('lazy').setup({
       require('fzf-lua').setup {
         'max-perf',
         grep = {
-          hidden = true,
-          -- rg_opts = "--hidden --glob '!.git/' --color=never --no-heading --column -n --smart-case",
+          -- hidden = true,
+          rg_opts = "--hidden --glob '!.git/' --color=never --no-heading --column -n --smart-case",
         },
       }
     end,
