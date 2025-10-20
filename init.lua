@@ -79,6 +79,8 @@ vim.opt.shortmess = 'I'
 -- Disable virtual text (displyed next to errors)
 vim.diagnostic.config { virtual_text = false }
 
+vim.opt.swapfile = false
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
