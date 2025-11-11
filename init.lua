@@ -129,16 +129,6 @@ vim.keymap.set('n', '<leader>ar', vim.lsp.buf.rename, { desc = 'code [a]ction: [
 vim.keymap.set('n', '<leader>dd', ':FzfLua diagnostics_document<CR>', { desc = '[d]ebug [d]ocument diagnostics' })
 vim.keymap.set('n', '<leader>dw', ':FzfLua diagnostics_workspace<CR>', { desc = '[d]ebug [w]orkspace diagnostics' })
 
-vim.keymap.set('n', '<leader>mc', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
-vim.keymap.set('n', '<leader>mdt', ':TSBufDisable highlight<CR>', { desc = 'Disable syntax highlight by Treesitter' })
-vim.keymap.set('n', '<leader>met', ':TSBufEnable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
-vim.keymap.set('n', '<leader>ml', ':%s/\\r//g<CR>', { desc = 'Clear \\r' })
-vim.keymap.set('n', '<leader>mpd', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
-vim.keymap.set('n', '<leader>mpf', ':let @+ = expand("%:t")<CR>', { desc = 'Copy file name to + (clipboard)' })
-vim.keymap.set('n', '<leader>mpp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy path to + (clipboard)' })
-vim.keymap.set('n', '<leader>mpr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
-vim.keymap.set('n', '<leader>ms', ':w | so %<CR>', { desc = 'Save file and source it' })
-vim.keymap.set('n', '<leader>mt', '"=strftime("%FT%T%z")<CR>p', { desc = 'Paste timestamp' })
 vim.keymap.set('n', '<leader>ma', function()
   -- Without yanked text highlight
   -- vim.fn.setreg('+', table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n'))
@@ -148,6 +138,18 @@ vim.keymap.set('n', '<leader>ma', function()
   vim.cmd 'normal! gg"+yG'
   vim.fn.winrestview(view)
 end, { desc = 'Copy all to + (clipboard)' })
+vim.keymap.set('n', '<leader>mc', ':nohlsearch<CR>', { desc = 'Remove search highlight' })
+vim.keymap.set('n', '<leader>mdt', ':TSBufDisable highlight<CR>', { desc = 'Disable syntax highlight by Treesitter' })
+vim.keymap.set('n', '<leader>met', ':TSBufEnable highlight<CR>', { desc = 'Enable syntax highlight by Treesitter' })
+vim.keymap.set('n', '<leader>ml', ':%s/\\r//g<CR>', { desc = 'Clear \\r' })
+vim.keymap.set('n', '<leader>mpd', ':let @+ = expand("%:p:h")<CR>', { desc = 'Copy directory to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpf', ':let @+ = expand("%:t")<CR>', { desc = 'Copy file name to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpp', ':let @+ = expand("%:p")<CR>', { desc = 'Copy path to + (clipboard)' })
+vim.keymap.set('n', '<leader>mpr', ':let @+ = expand("%")<CR>', { desc = 'Copy relative path to + (clipboard)' })
+vim.keymap.set('n', '<leader>mR', '<cmd>ReloadAll!<CR>', { desc = '[R]eload all (force)' })
+vim.keymap.set('n', '<leader>mr', '<cmd>ReloadAll<CR>', { desc = '[r]eload all (keep modified)' })
+vim.keymap.set('n', '<leader>ms', ':w | so %<CR>', { desc = 'Save file and source it' })
+vim.keymap.set('n', '<leader>mt', '"=strftime("%FT%T%z")<CR>p', { desc = 'Paste timestamp' })
 
 vim.keymap.set('n', '<leader><leader>', ':FzfLua buffers<CR>', { desc = '[ ] search buffers' })
 vim.keymap.set('n', '<leader>s/', ':FzfLua search_history<CR>', { desc = '[s]earch [/] search history' })
@@ -590,6 +592,8 @@ require('lazy').setup({
         javascriptreact = { 'prettier' },
         typescript = { 'prettier' },
         typescriptreact = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -890,3 +894,47 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.fn.setreg('8', yank)
   end,
 })
+
+-- My functions --
+------------------
+
+-- Reload all named, file-backed buffers. :ReloadAll! discards local edits.
+local function filebufs()
+  local acc = {}
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(b) and vim.fn.buflisted(b) == 1 and vim.bo[b].buftype == '' and vim.api.nvim_buf_get_name(b) ~= '' then
+      table.insert(acc, b)
+    end
+  end
+  return acc
+end
+
+local function short(name)
+  return vim.fn.fnamemodify(name, ':~:.')
+end
+
+local function reload_all(force)
+  local reloaded, skipped, failed = 0, 0, 0
+  for _, b in ipairs(filebufs()) do
+    local name = vim.api.nvim_buf_get_name(b)
+    if not force and vim.bo[b].modified then
+      skipped = skipped + 1
+      vim.notify(('Skipped reload (modified): %s'):format(short(name)), vim.log.levels.WARN)
+    else
+      local ok = vim.api.nvim_buf_call(b, function()
+        return pcall(vim.cmd, force and 'silent edit!' or 'silent edit')
+      end)
+      if ok then
+        reloaded = reloaded + 1
+      else
+        failed = failed + 1
+        vim.notify(('Reload failed: %s'):format(short(name)), vim.log.levels.ERROR)
+      end
+    end
+  end
+  vim.notify(('Reloaded: %d  Skipped: %d  Failed: %d'):format(reloaded, skipped, failed))
+end
+
+vim.api.nvim_create_user_command('ReloadAll', function(opts)
+  reload_all(opts.bang) -- :ReloadAll (safe), :ReloadAll! (force)
+end, { bang = true, desc = 'Reload all file buffers from disk' })
