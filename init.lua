@@ -180,15 +180,28 @@ vim.keymap.set('n', '<leader>rW', function()
   local keys = vim.api.nvim_replace_termcodes(cmd .. '<Left><Left>', true, false, true)
   vim.api.nvim_feedkeys(keys, 'n', false)
 end, { desc = '[r]eplace text of [W]ORD under cursor in current buffer' })
-
+vim.keymap.set('n', '<leader>;', 'A;<ESC>', { desc = 'Append ;' })
 vim.keymap.set('n', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('n', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
+
 vim.keymap.set('v', '<leader>pv', '"+p', { desc = 'Paste from + (clipboard)' })
 vim.keymap.set('v', '<leader>pp', '"0p', { desc = 'Paste from 0' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to + (clipboard)' })
+vim.keymap.set('v', '<leader>ca', function()
+  vim.cmd [[normal! "zy]]
+  local new_text = vim.fn.getreg 'z'
 
-vim.keymap.set('n', '<leader>;', 'A;<ESC>', { desc = 'Append ;' })
+  local current_reg = vim.fn.getreg 'c'
+
+  if current_reg == '' then
+    vim.fn.setreg('c', new_text)
+  else
+    vim.fn.setreg('c', current_reg .. ', ' .. new_text)
+  end
+
+  print 'Appended to register c (last value in z)'
+end, { desc = 'Append selection to register c with comma' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
